@@ -7,10 +7,22 @@
 //para dizer quanto ela recebe por hora.
 //Let t poderia ser valorDiario e Let p seria melhor como horasDia.
 
-let Nome
-let idade
-console.log (typeof nome, idade)
+// let Nome
+// let idade
+// console.log (typeof nome, idade)
 
-nome = prompt ('Qual seu nome')
-idade = prompt ('Qual sua idade')
-console.log ('Seu nome' , nome) 
+// nome = prompt ('Qual seu nome')
+// idade = prompt ('Qual sua idade')
+// console.log ('Seu nome' , nome)
+// console.log ('Sua idade' , idade)
+
+
+
+
+const primeiroNumero = "10"
+const segundoNumero = "10"
+
+const igualdade = primeiroNumero === segundoNumero
+console.log("o primeiro número é igual ao segundo?", igualdade)
+
+
