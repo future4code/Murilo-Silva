@@ -70,23 +70,29 @@
 
 // D)-
 
-const arrayOriginal = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+// const arrayOriginal = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 
-const retornaStringNaArray = (array) => {
-    const newArray = []
-    for(const elemento of array) {
-        newArray.push(`O elemento do index ${array.indexOf(elemento)} é ${elemento}`)
-        return newArray
-    }
+// const retornaStringNaArray = (array) => {
+//     const newArray = []
+//     for(const elemento of array) {
+//         newArray.push(`O elemento do index ${array.indexOf(elemento)} é ${elemento}`)
+//         return newArray
+//     }
+// }
+
+// console.log(retornaStringNaArray(arrayOriginal))
+
+
+
+const idade = Number(prompt("Digite a idade"))
+const altura = Number(prompt("Digite sua altura"))
+const problemaCardiaco = false
+
+if( idade >= 18 || altura >= 1,60 || problemaCardiaco === false){
+    console.log("Blz, pode entrar")
+} else {
+    console.log("Vai dar não, chefia!")
 }
-
-console.log(retornaStringNaArray(arrayOriginal))
-
-
-
-
-
-
 
 
 
