@@ -33,9 +33,9 @@ div>p:first-child {
     display: inline;
 }
 
-div img {
+/* div img {
     background: black;
-}
+} */
 
 .botao-amarelo {
     background-color: #ffaf43;
@@ -105,6 +105,18 @@ table {
     text-align: center;
 }
 
+#imgProdut1{
+    width: 50px
+}
+#imgProdut2{
+    width: 50px
+}
+#imgProdut3{
+    width: 50px
+}
+
+
+
 td button {
     background-color: #fadf63;
     width: 150px;
@@ -132,3 +144,9 @@ td button {
 #back-button:hover {
     background-color: #635a3d
 }
+
+
+
+
+
+
