@@ -53,6 +53,7 @@ div img {
 .container {
     height: 500px;
     text-align: center;
+    padding-top: 200px;
 }
 
 .icone {
@@ -72,7 +73,8 @@ div img {
 }
 
 #container-de-descricao>ol {
-    padding: 15px 0px;
+    padding-top: 5px;
+    padding-bottom: 150px;
 }
 
 #container-para-comprar {
