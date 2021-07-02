@@ -1,0 +1,31 @@
+.texto {
+        text-align: center;
+      }
+      .texto-primario {
+        color: papayawhip;
+         border: 1px dotted black;
+         background-color: orangered;
+        }
+        
+        .filho1{
+            height: 1600px;
+            width: 600px;
+            margin-left: 30px 
+        }
+        .filho2{
+            height: 1600px;
+            width: 600px;
+            margin-left: 30px 
+        }
+        .filho3{
+            height: 1600px;
+            width: 600px;
+            margin-left: 30px 
+        }
+        .filho4{
+            height: 1600px;
+            width: 1600px;
+            margin-left: 30px 
+        }
+        
+        
