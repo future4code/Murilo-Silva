@@ -1,0 +1,28 @@
+header{
+    display: flex;
+    background-color: mediumvioletred;
+    justify-content: space-between;
+    margin: 10px;
+    background-color: mediumvioletred;
+
+}
+
+.titulo{
+    display: flex;
+    justify-content: ceter;
+
+}
+
+header img{
+    width: 20px;
+}
+
+
+
+
+
+
+
+
+
+
