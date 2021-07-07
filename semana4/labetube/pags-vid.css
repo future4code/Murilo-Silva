@@ -3,7 +3,7 @@
     padding: 0;
     box-sizing: border-box;
   }
-
+  
   header {
     display: flex;
     background-color: slategrey;
@@ -12,38 +12,27 @@
     padding: 0 20px;
     grid-column: 1 / 3;
   }
-
-  h2, p {
-    padding: 8px;
-  }
   
-.card-imagem{
-  display: grid;
-  text-align: center;
-  
-}
 
-.imagem {
- width: 200px;
- height: 200px;
-}
-
-  main {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    column-gap: 20px;
-    margin: 20px;
-    margin-top: 6em;
-    /* overflow: auto; */
-  }
-  
   footer {
     display: grid;
     background-color: slategrey;
     justify-content: center;
     align-items: center;
     grid-column: 1 / -1;
-    margin-top: 15.5rem;
+    margin-top: 50rem;
     
     
+  }
+
+  .icone-volta{
+    background-color: tomato;
+    
+  }
+
+  .videos{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 50rem;
   }
