@@ -20,18 +20,9 @@ const InputsContainer = styled.div`
 
 class App extends React.Component {
     state = {
-      tarefas: [{
-        id: Date.now(), 
-        texto: 'lavar roupa',
-        completa: false 
-      },
-      {
-        id: Date.now(), 
-        texto: 'Fazer comida',
-        completa: true 
-      }],
+      tarefas: [],
       inputValue: '',
-      filtro: "pendentes"
+      filtro: ""
     }
 
   componentDidUpdate() {
@@ -48,17 +39,28 @@ class App extends React.Component {
   }
 
   criaTarefa = () => {
-    const novaTarefa = [{
+    const novaTarefa = {
       id: Date.now(),
       texto: this.state.inputValue,
-      filtro: false
-    }]
+      completa: false
+    }
     const novaListaDeTarefas = [novaTarefa, ...this.state.tarefas]
-    this.setState({listaDePosts: novaListaDeTarefas})
+    this.setState({tarefas: novaListaDeTarefas})
   }
 
   selectTarefa = (id) => {
-
+    const novaListaDeTarefas = this.state.tarefas.map((tarefa) => {
+      if (id === tarefa.id){
+        const novaTarefa = {
+          ...tarefa,
+          completa: !tarefa.completa
+        }
+        return novaTarefa
+      } else {
+        return tarefa 
+      }
+    })
+    this.setState({tarefas: novaListaDeTarefas})
   }
 
   onChangeFilter = (event) => {
