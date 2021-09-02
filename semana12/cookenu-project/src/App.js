@@ -1,12 +1,11 @@
 import React from "react";
-import styled from "styled-components";
+import Router from "./routes/Router";
 
 
-function App() {
-
+const App = () => {
   return (
     <div>
-
+      <Router/>
     </div>
   );
 }
