@@ -6,12 +6,14 @@ import RecipeDetailsPage from "../pages/RecipeDetailsPage/RecipeDetailsPage"
 import RecipesListPage from "../pages/RecipesListPage/RecipesListPage"
 import SignUpPage from "../pages/SignUpPage/SignUpPage"
 import ErrorPage from "../pages/ErrorPage/Errorpage"
+import Header from "../components/header/Header"
 
 
 const Router = () => {
     return (
         <BrowserRouter>
             <Switch>
+                <Header/>
                 <Route exact path="/login">
                     <LoginPage />
                 </Route>
