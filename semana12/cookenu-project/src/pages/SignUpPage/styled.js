@@ -15,22 +15,21 @@ max-width: 450px;
 align-items: center;
 margin-bottom: 20px;
 `
-export const SignUpButtonContainer = styled.div`
+export const SignUpButton = styled.div`
 width: 80vh;
 max-width: 450px;
+`
+export const SignUpFormContainer = styled.div`
+display: flex;
+flex-direction: column;
+width: 80vw;
+max-width: 450px;
+align-items: center;
+margin-bottom: 20px;
 `
 
 export const LogoImg = styled.img`
 width: 70vw;
 max-width: 350px;
 
-`
-
-export const LoginFormContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 80vw;
-  max-width: 450px;
-  align-items: center;
-  margin-bottom: 20px;
 `
