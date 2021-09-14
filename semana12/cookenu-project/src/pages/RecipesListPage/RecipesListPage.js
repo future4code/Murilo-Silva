@@ -5,7 +5,7 @@ import { BASE_URL} from '../../constants/urls'
 import { RecipeCard } from "../../components/RecipeCard/RecipeCard"
 import { RecipeListContainer, AddRecipeButton } from "./styled"
 import { Add } from "@material-ui/icons"
-import { goToAddRecipes } from "../../routes/coordinator"
+import { goToAddRecipes, goToRecipeDetail } from "../../routes/coordinator"
 import { useHistory } from "react-router"
 
 
@@ -14,13 +14,16 @@ const RecipesListPage = () => {
     const history = useHistory()
     const recipes = useRequestData ([], `${BASE_URL}/recipe/feed`)
 
+    const onClickCard = (id) => {
+        goToRecipeDetail(history, id)
+    }
     const recipeCards = recipes.map((recipe) => {
         return (
             <RecipeCard
             key={recipe.recipe_id}
             title={recipe.title}
             image={recipe.image}
-            onClick={() => null}
+            onClick={() => onClickCard(recipe.recipe_id)}
             />
         )
     })
