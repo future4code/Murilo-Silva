@@ -5,7 +5,7 @@ import useRequestData from "../../hooks/useRequestData"
 import { BASE_URL } from "../../constants/urls"
 import { ScreenContainer, RecipeContainer, RecipeImage } from "./styled"
 import Typography from "@material-ui/core/Typography"
-
+import {Loading} from "../../components/Loading/Loading"
 
 const RecipeDetailsPage = () => {
     useProtectedPage()
@@ -15,15 +15,18 @@ const RecipeDetailsPage = () => {
 
     return (
         <ScreenContainer>
-            {recipe &&
+            {recipe ?
                 <RecipeContainer>
                     <RecipeImage src={recipe.image} />
                     <Typography gutterBottom align={'center'} variant={'h5'} color={'primary'}>{recipe.title}</Typography>
                     <Typography align={'center'}>
-                    {recipe.description}</Typography>
-                </RecipeContainer>}
-        </ScreenContainer>
+                        {recipe.description}</Typography>
+                </RecipeContainer>
+                :
+                <Loading/>
+            }
+      </ScreenContainer>
     )
 }
 
-export default RecipeDetailsPage
+            export default RecipeDetailsPage
