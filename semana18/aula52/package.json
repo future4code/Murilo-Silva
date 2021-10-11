@@ -1,0 +1,11 @@
+{
+  "name": "classes-encapsulamento",
+  "scripts": {
+     "start": "tsc && node ./build/index.js",
+     "dev-start": "tsnd --ignore-watch node_modules --transpile-only ./src/index.ts"
+  },
+  "devDependencies": {
+     "ts-node-dev": "^1.1.8",
+     "typescript": "^4.2.3"
+  }
+}
