@@ -1,26 +1,39 @@
-import { app } from "./app";
-import UserBusiness from "./business/User.business";
-import UserController from "./controller/User.controller";
-import UserData from "./data/User.data";
-import Authenticator from "./services/Authenticator";
-import HashManager from "./services/HashManager";
-import IdGenerator from "./services/IdGenerator";
-const userController = new UserController(
-    new UserBusiness(
-        new UserData(),
-        new IdGenerator(),
-        new Authenticator(),
-        new HashManager()
-    )
-)
-app.post("/user/signup", userController.signup);
+/**************************** IMPORTS ******************************/
 
+import express, { Express, Request, Response } from "express"
+import cors from "cors"
+import knex from "knex"
+import dotenv from "dotenv"
+import * as jwt from "jsonwebtoken"
+import * as bcrypt from "bcryptjs"
+import { v4 } from "uuid"
+import Knex from "knex"
+
+/**************************** CONFIG ******************************/
+
+dotenv.config()
+
+export const connection: Knex = knex({
+   client: "mysql",
+   connection: {
+      host: process.env.DB_HOST,
+      user: process.env.DB_USER,
+      password: process.env.DB_PASSWORD,
+      database: process.env.DB_SCHEMA,
+      port: 3306,
+      multipleStatements: true
+   }
+})
+
+const app: Express = express()
+app.use(express.json())
+app.use(cors())
 
 /**************************** TYPES ******************************/
 
 // type authenticationData = {
 //    id: string
-// }
+// }                                   isto foi para entities User.ts
 
 // type user = {
 //    id: string,
@@ -29,9 +42,11 @@ app.post("/user/signup", userController.signup);
 //    password: string
 // }
 
+
+
 // enum POST_TYPES {
 //    NORMAL = "normal",
-//    EVENT = "event"
+//    EVENT = "event"                   isto foi para Post.ts
 // }
 
 // type post = {
@@ -45,201 +60,170 @@ app.post("/user/signup", userController.signup);
 
 /**************************** SERVICES ******************************/
 
-// const generateId = (): string => v4()
+const generateId = (): string => v4()
 
-// function generateToken(
-//    payload: authenticationData
-// ): string {
-//    return jwt.sign(
-//       payload,
-//       process.env.JWT_KEY as string,
-//       {
-//          expiresIn: process.env.JWT_EXPIRES_IN
-//       }
-//    )
-// }
+function generateToken(
+   payload: authenticationData
+): string {
+   return jwt.sign(
+      payload,
+      process.env.JWT_KEY as string,
+      {
+         expiresIn: process.env.JWT_EXPIRES_IN
+      }
+   )
+}
 
-// function getTokenData(
-//    token: string
-// ): authenticationData {
-//    const result: any = jwt.verify(
-//       token,
-//       process.env.JWT_KEY as string
-//    )
+function getTokenData(
+   token: string
+): authenticationData {
+   const result: any = jwt.verify(
+      token,
+      process.env.JWT_KEY as string
+   )
 
-//    return { id: result.id, }
-// }
+   return { id: result.id, }
+}
 
-// const hash = async (
-//    plainText: string
-// ): Promise<string> => {
-//    const rounds = Number(process.env.BCRYPT_COST);
-//    const salt = await bcrypt.genSalt(rounds);
-//    return bcrypt.hash(plainText, salt)
-// }
+const hash = async (
+   plainText: string
+): Promise<string> => {
+   const rounds = Number(process.env.BCRYPT_COST);
+   const salt = await bcrypt.genSalt(rounds);
+   return bcrypt.hash(plainText, salt)
+}
 
-// const compare = async (
-//    plainText: string, cypherText: string
-// ): Promise<boolean> => {
-//    return bcrypt.compare(plainText, cypherText)
-// }
+const compare = async (
+   plainText: string, cypherText: string
+): Promise<boolean> => {
+   return bcrypt.compare(plainText, cypherText)
+}
 
 /**************************** ENDPOINTS ******************************/
 
-// app.post('/users/signup', async (req: Request, res: Response) => {
-//    try {
-//       let message = "Success!"
-//       const { name, email, password } = req.body
+app.post('/users/signup', async (req: Request, res: Response) => {
+   
+})
 
-//       if (!name || !email || !password) {
-//          res.statusCode = 406
-//          message = '"name", "email" and "password" must be provided'
-//          throw new Error(message)
-//       }
+app.post('/users/login', async (req: Request, res: Response) => {
+   try {
+      let message = "Success!"
 
-//       const id: string = generateId()
+      const { email, password } = req.body
 
-//       const cypherPassword = await hash(password);
+      if (!email || !password) {
+         res.statusCode = 406
+         message = '"email" and "password" must be provided'
+         throw new Error(message)
+      }
 
-//       await connection('labook_users')
-//          .insert({
-//             id,
-//             name,
-//             email,
-//             password: cypherPassword
-//          })
+      const queryResult: any = await connection("labook_users")
+         .select("*")
+         .where({ email })
 
-//       const token: string = generateToken({ id })
+      if (!queryResult[0]) {
+         res.statusCode = 401
+         message = "Invalid credentials"
+         throw new Error(message)
+      }
 
-//       res.status(201).send({ message, token })
+      const user: user = {
+         id: queryResult[0].id,
+         name: queryResult[0].name,
+         email: queryResult[0].email,
+         password: queryResult[0].password
+      }
 
-//    } catch (error) {
-//       res.statusCode = 400
-//       let message = error.sqlMessage || error.message
+      const passwordIsCorrect: boolean = await compare(password, user.password)
 
-//       res.send({ message })
-//    }
-// })
+      if (!passwordIsCorrect) {
+         res.statusCode = 401
+         message = "Invalid credentials"
+         throw new Error(message)
+      }
 
-// app.post('/users/login', async (req: Request, res: Response) => {
-//    try {
-//       let message = "Success!"
+      const token: string = generateToken({
+         id: user.id
+      })
 
-//       const { email, password } = req.body
+      res.status(200).send({ message, token })
 
-//       if (!email || !password) {
-//          res.statusCode = 406
-//          message = '"email" and "password" must be provided'
-//          throw new Error(message)
-//       }
+   } catch (error: any) {
+      let message = error.sqlMessage || error.message
+      res.statusCode = 400
 
-//       const queryResult: any = await connection("labook_users")
-//          .select("*")
-//          .where({ email })
+      res.send({ message })
+   }
+})
 
-//       if (!queryResult[0]) {
-//          res.statusCode = 401
-//          message = "Invalid credentials"
-//          throw new Error(message)
-//       }
+app.post('/posts/create', async (req: Request, res: Response) => {
+   try {
+      let message = "Success!"
 
-//       const user: user = {
-//          id: queryResult[0].id,
-//          name: queryResult[0].name,
-//          email: queryResult[0].email,
-//          password: queryResult[0].password
-//       }
+      const { photo, description, type } = req.body
 
-//       const passwordIsCorrect: boolean = await compare(password, user.password)
+      const token: string = req.headers.authorization as string
 
-//       if (!passwordIsCorrect) {
-//          res.statusCode = 401
-//          message = "Invalid credentials"
-//          throw new Error(message)
-//       }
+      const tokenData: authenticationData = getTokenData(token)
 
-//       const token: string = generateToken({
-//          id: user.id
-//       })
+      const id: string = generateId()
 
-//       res.status(200).send({ message, token })
+      await connection("labook_posts")
+         .insert({
+            id,
+            photo,
+            description,
+            type,
+            author_id: tokenData.id
+         })
 
-//    } catch (error) {
-//       let message = error.sqlMessage || error.message
-//       res.statusCode = 400
+      res.status(201).send({ message })
 
-//       res.send({ message })
-//    }
-// })
+   } catch (error: any) {
+      let message = error.sqlMessage || error.message
+      res.statusCode = 400
 
-// app.post('/posts/create', async (req: Request, res: Response) => {
-//    try {
-//       let message = "Success!"
+      res.send({ message })
+   }
+})
 
-//       const { photo, description, type } = req.body
+app.get('/posts/:id', async (req: Request, res: Response) => {
+   try {
+      let message = "Success!"
 
-//       const token: string = req.headers.authorization as string
+      const { id } = req.params
 
-//       const tokenData: authenticationData = getTokenData(token)
+      const queryResult: any = await connection("labook_posts")
+         .select("*")
+         .where({ id })
 
-//       const id: string = generateId()
+      if (!queryResult[0]) {
+         res.statusCode = 404
+         message = "Post not found"
+         throw new Error(message)
+      }
 
-//       await connection("labook_posts")
-//          .insert({
-//             id,
-//             photo,
-//             description,
-//             type,
-//             author_id: tokenData.id
-//          })
+      const post: post = {
+         id: queryResult[0].id,
+         photo: queryResult[0].photo,
+         description: queryResult[0].description,
+         type: queryResult[0].type,
+         createdAt: queryResult[0].created_at,
+         authorId: queryResult[0].author_id,
+      }
 
-//       res.status(201).send({ message })
+      res.status(200).send({ message, post })
 
-//    } catch (error) {
-//       let message = error.sqlMessage || error.message
-//       res.statusCode = 400
+   } catch (error: any) {
+      let message = error.sqlMessage || error.message
+      res.statusCode = 400
 
-//       res.send({ message })
-//    }
-// })
+      res.send({ message })
+   }
+})
 
-// app.get('/posts/:id', async (req: Request, res: Response) => {
-//    try {
-//       let message = "Success!"
+/**************************** SERVER INIT ******************************/
 
-//       const { id } = req.params
-
-//       const queryResult: any = await connection("labook_posts")
-//          .select("*")
-//          .where({ id })
-
-//       if (!queryResult[0]) {
-//          res.statusCode = 404
-//          message = "Post not found"
-//          throw new Error(message)
-//       }
-
-//       const post: post = {
-//          id: queryResult[0].id,
-//          photo: queryResult[0].photo,
-//          description: queryResult[0].description,
-//          type: queryResult[0].type,
-//          createdAt: queryResult[0].created_at,
-//          authorId: queryResult[0].author_id,
-//       }
-
-//       res.status(200).send({ message, post })
-
-//    } catch (error) {
-//       let message = error.sqlMessage || error.message
-//       res.statusCode = 400
-
-//       res.send({ message })
-//    }
-// })
-
-// /**************************** SERVER INIT ******************************/
-
-// app.listen(3003, () => {
-//    console.log("Server running on port 3003")
-// })
+app.listen(3003, () => {
+   console.log("Server running on port 3003")
+})

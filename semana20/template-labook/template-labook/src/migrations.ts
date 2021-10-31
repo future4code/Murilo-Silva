@@ -19,10 +19,5 @@ connection
          FOREIGN KEY (author_id) REFERENCES labook_users (id)
       )
    `)
-   .then(() => {
-      console.log("Sucessfully Created!!!");
-   }).catch(error => {
-      console.log(error.sqlMessage || error.message);
-   }).finally(()=>{
-    connection.destroy()
- })
+   .then(console.log)
+   .catch(console.log)
