@@ -10,15 +10,22 @@ export const connection = knex ({
         host: process.env.DB_HOST,
         port: 3306,
         user: process.env.DB_USER,
-        password: process.env.DB_PASSSWORD,
+        password: process.env.DB_PASSWORD,
         database: process.env.DB_NAME
     }
 })
 
-app.get('/ping', (req, res) => {
-    try {
-        res.send('pong')
-    } catch (error: any) {
-        console.log(error.message)
+app.get("/pokemon", async(req, res) => {
+    const id = Number(req.query.id)
+
+    let result
+
+    if(id) {
+        result = await connection("pokemons").where({id})
+    } else {
+        result = await connection("pokemons")
     }
+
+    res.send(result)
 })
+
