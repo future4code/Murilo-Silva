@@ -12762,7 +12762,7 @@ export const pokemons = [
         "CP39": 403
     },
     {
-        "Row": 415,
+        "Row": 416,
         "Name": "Burmy (Trash Cloak)",
         "Pokedex_Number": 412,
         "Img_name": "412-trash",
@@ -12791,7 +12791,7 @@ export const pokemons = [
         "CP39": 403
     },
     {
-        "Row": 415,
+        "Row": 417,
         "Name": "Burmy (Sandy Cloak)",
         "Pokedex_Number": 412,
         "Img_name": "412-sandy",
