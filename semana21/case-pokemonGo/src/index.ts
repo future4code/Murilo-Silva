@@ -1,17 +1,6 @@
 import { connection } from './Data/connection'
-import {app} from './app'
+import {app} from './controller/app'
+import { getAllPokemon } from "./controller/getAllPokemon"
 
-app.get("/pokemon", async(req, res) => {
-    const id = Number(req.query.id)
-
-    let result
-
-    if(id) {
-        result = await connection("pokemons").where({id})
-    } else {
-        result = await connection("pokemons")
-    }
-
-    res.send(result)
-})
+app.get("/pokemon", getAllPokemon)
 
