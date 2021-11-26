@@ -1,0 +1,9 @@
+POST https://localhost:3003/users
+Content-Type: application/json
+
+{
+    "name": "Mário",
+    "email": "mario@bros.com",
+    "age": 60
+    
+}
