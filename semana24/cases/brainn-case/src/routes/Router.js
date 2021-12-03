@@ -5,8 +5,7 @@ import QuinaPage from "../pages/QuinaPage/QuinaPage"
 import ErrorPage from "../pages/ErrorPage/ErrorPage";
 
 const Router = () => {
-    return (
-        <BrowserRouter>
+    return (  
         <Switch>
             <Route exact path = "/">
                 <MegaSenaPage/>
@@ -19,7 +18,6 @@ const Router = () => {
             </Route>
             
         </Switch>
-        </BrowserRouter>
     )
 }
 
