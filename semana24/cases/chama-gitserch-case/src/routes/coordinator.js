@@ -4,3 +4,5 @@ export const goToHistory = (history) => {
 export const goToSearch = (history) => {
     history.push("/")
 }
+
+//PR para correção da Branch
