@@ -21,10 +21,12 @@ const App = () => {
         console.log(error)
       })
   }
-  
+
   useEffect(() => {
     getLoterias()
   }, [])
+
+  console.log(loterias)
 
   return (
     <BrowserRouter>
