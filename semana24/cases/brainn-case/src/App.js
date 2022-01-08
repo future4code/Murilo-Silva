@@ -26,6 +26,8 @@ const App = () => {
     getLoterias()
   }, [])
 
+console.log(getLoterias)
+
   return (
     <BrowserRouter>
       Brainn
