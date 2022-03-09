@@ -28,9 +28,9 @@ import {
         axios
             .get(`${BASE_URL}/loterias-concursos`)
             .then((res) => {
-                setRelacaoConcurso(res.data[1])
+                setRelacaoConcurso(res.data[2])
                 if (relacaoConcurso) {
-                    setConcursoId(res.data[1].concursoId)
+                    setConcursoId(res.data[2].concursoId)
                 }
             })
             .catch((error) => {
@@ -65,7 +65,7 @@ import {
       <LeftCol></LeftCol>
       <TitleWrap>
         <LogoLoterias src={logoLoterias} />
-        <Title>QUINA</Title>
+        <Title>LOTOFÁCIL</Title>
       </TitleWrap>
       <GameTitle>
         <p>CONCURSO</p>

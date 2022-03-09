@@ -1,7 +1,4 @@
 import Router from "./routes/Router";
-import MegaSenaPage from "./pages/MegaSenaPage/MegaSenaPage";
-import QuinaPage from "./pages/QuinaPage/QuinaPage";
-import theme from "./constants/theme";
 import axios from "axios";
 import { BASE_URL } from "./constants/urls"
 import { useEffect, useState } from "react";
